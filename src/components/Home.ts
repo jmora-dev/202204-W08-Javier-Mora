@@ -1,28 +1,28 @@
-import { series } from "../data/filmsData.js";
+import { series } from "../data/seriesData.js";
 import { iComponent } from "../interfaces/iComponent.js";
-import { Film } from "../models/Film.js";
+import { Series } from "../models/Series.js";
 import { Component } from "./Component.js";
-import { FilmList } from "./FilmList.js";
+import { SeriesList } from "./SeriesList.js";
 
 export class Home extends Component implements iComponent {
-  films: Array<Film>;
+  seriesList: Array<Series>;
 
   constructor(public selector: string) {
     super(selector, () => this.createTemplate());
-    this.films = this.getFilms();
+    this.seriesList = this.getSeries();
     this.render();
   }
 
   render(): void {
     super.render();
-    new FilmList(".series-pending > div", this.filmsPending());
-    new FilmList(".series-watched > div", this.filmsWatched());
+    new SeriesList(".series-pending > div", this.seriesPending());
+    new SeriesList(".series-watched > div", this.seriesWatched());
   }
 
-  getFilms(): Array<Film> {
+  getSeries(): Array<Series> {
     return series.map(
       (data) =>
-        new Film(
+        new Series(
           data.id,
           data.name,
           data.creator,
@@ -35,12 +35,12 @@ export class Home extends Component implements iComponent {
     );
   }
 
-  filmsPending(): Array<Film> {
-    return this.films.filter((film) => !film.watched);
+  seriesPending(): Array<Series> {
+    return this.seriesList.filter((film) => !film.watched);
   }
 
-  filmsWatched(): Array<Film> {
-    return this.films.filter((film) => film.watched);
+  seriesWatched(): Array<Series> {
+    return this.seriesList.filter((film) => film.watched);
   }
 
   createTemplate(): string {
@@ -50,9 +50,9 @@ export class Home extends Component implements iComponent {
         <section class="series-pending">
           <h3 class="subsection-title">Pending series</h3>
           ${
-            this.filmsPending().length > 0
+            this.seriesPending().length > 0
               ? `<p class="info">You have ${
-                  this.filmsPending().length
+                  this.seriesPending().length
                 } series pending to watch</p>`
               : `<p class="info">You don't have any series pending to watch</p>`
           }
@@ -61,9 +61,9 @@ export class Home extends Component implements iComponent {
         <section class="series-watched">
           <h3 class="subsection-title">Watched series</h3>
           ${
-            this.filmsWatched().length > 0
+            this.seriesWatched().length > 0
               ? `<p class="info">You have watched ${
-                  this.filmsWatched().length
+                  this.seriesWatched().length
                 } series</p>`
               : `<p class="info">You don't have watched any series</p>`
           }
@@ -71,4 +71,5 @@ export class Home extends Component implements iComponent {
         </section>
       </section>`;
   }
+
 }
