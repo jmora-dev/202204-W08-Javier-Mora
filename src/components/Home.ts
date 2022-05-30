@@ -5,11 +5,11 @@ import { Component } from "./Component.js";
 import { SeriesList } from "./SeriesList.js";
 
 export class Home extends Component implements iComponent {
-  seriesList: Array<Series>;
+  seriesArray: Array<Series>;
 
   constructor(public selector: string) {
     super(selector, () => this.createTemplate());
-    this.seriesList = this.getSeries();
+    this.seriesArray = this.getSeries();
     this.render();
   }
 
@@ -36,11 +36,11 @@ export class Home extends Component implements iComponent {
   }
 
   seriesPending(): Array<Series> {
-    return this.seriesList.filter((film) => !film.watched);
+    return this.seriesArray.filter((film) => !film.watched);
   }
 
   seriesWatched(): Array<Series> {
-    return this.seriesList.filter((film) => film.watched);
+    return this.seriesArray.filter((film) => film.watched);
   }
 
   createTemplate(): string {
@@ -71,5 +71,4 @@ export class Home extends Component implements iComponent {
         </section>
       </section>`;
   }
-
 }
