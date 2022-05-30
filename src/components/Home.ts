@@ -1,45 +1,39 @@
 import { series } from "../data/seriesData.js";
 import { iComponent } from "../interfaces/iComponent.js";
-import { Series } from "../models/Series.js";
+import { iSeries } from "../interfaces/iSeries.js";
 import { Component } from "./Component.js";
 import { SeriesList } from "./SeriesList.js";
 
 export class Home extends Component implements iComponent {
-  seriesArray: Array<Series>;
+  seriesArray: Array<iSeries>;
 
   constructor(public selector: string) {
     super(selector, () => this.createTemplate());
-    this.seriesArray = this.getSeries();
+    this.seriesArray = series;
     this.render();
   }
 
   render(): void {
     super.render();
-    new SeriesList(".series-pending > div", this.seriesPending());
-    new SeriesList(".series-watched > div", this.seriesWatched());
-  }
-
-  getSeries(): Array<Series> {
-    return series.map(
-      (data) =>
-        new Series(
-          data.id,
-          data.name,
-          data.creator,
-          data.year,
-          data.poster,
-          data.watched,
-          data.score,
-          data.emmies
-        )
+    new SeriesList(
+      ".series-pending > div",
+      this.seriesPending(),
+      this.onDeleteSeries.bind(this),
+      this.setScoreSeries.bind(this)
+    );
+    new SeriesList(
+      ".series-watched > div",
+      this.seriesWatched(),
+      this.onDeleteSeries.bind(this),
+      this.setScoreSeries.bind(this)
     );
   }
 
-  seriesPending(): Array<Series> {
+  seriesPending(): Array<iSeries> {
     return this.seriesArray.filter((film) => !film.watched);
   }
 
-  seriesWatched(): Array<Series> {
+  seriesWatched(): Array<iSeries> {
     return this.seriesArray.filter((film) => film.watched);
   }
 
@@ -70,5 +64,23 @@ export class Home extends Component implements iComponent {
           <div></div>
         </section>
       </section>`;
+  }
+
+  onDeleteSeries(id: number): void {
+    this.seriesArray = this.seriesArray.filter((series) => series.id !== id);
+    this.render();
+  }
+
+  setScoreSeries(id: number, score: number): void {
+    this.seriesArray = this.seriesArray.map((series) => {
+      console.log(series);
+      const current = <iSeries>{ ...series };
+      if (series.id === id) {
+        current.watched = true;
+        current.score = score;
+      }
+      return current;
+    });
+    this.render();
   }
 }
