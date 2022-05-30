@@ -4,7 +4,7 @@ import { Component } from "./Component.js";
 import { StarRating } from "./StarRating.js";
 
 export class SeriesCard extends Component implements iComponent {
-  constructor(public selector: string, public film: Series) {
+  constructor(public selector: string, public series: Series) {
     super(selector, () => this.createTemplate());
     this.render();
   }
@@ -12,8 +12,8 @@ export class SeriesCard extends Component implements iComponent {
   render(): void {
     super.render();
     new StarRating(
-      `.serie[data-id='${this.film.id}'] [data-role='score']`,
-      this.film.score,
+      `.serie[data-id='${this.series.id}'] [data-role='score']`,
+      this.series.score,
       () => {}
     );
   }
@@ -22,11 +22,11 @@ export class SeriesCard extends Component implements iComponent {
     return `
       <img
           class="serie__poster"
-          src="${this.film.poster}"
-          alt="${this.film.name}"
+          src="${this.series.poster}"
+          alt="${this.series.name}"
       />
-      <h4 class="serie__title">${this.film.name}</h4>
-      <p class="serie__info">${this.film.creator} (${this.film.year})</p>
+      <h4 class="serie__title">${this.series.name}</h4>
+      <p class="serie__info">${this.series.creator} (${this.series.year})</p>
       <div data-role="score"></div>
       <i class="fas fa-times-circle icon--delete"></i>`;
   }
