@@ -1,27 +1,23 @@
 import { series } from "../data/seriesData.js";
-import { Series } from "../models/Series.js";
 import { Component } from "./Component.js";
 import { SeriesList } from "./SeriesList.js";
 export class Home extends Component {
     constructor(selector) {
         super(selector, () => this.createTemplate());
         this.selector = selector;
-        this.seriesList = this.getSeries();
+        this.seriesArray = series;
         this.render();
     }
     render() {
         super.render();
-        new SeriesList(".series-pending > div", this.seriesPending());
-        new SeriesList(".series-watched > div", this.seriesWatched());
-    }
-    getSeries() {
-        return series.map((data) => new Series(data.id, data.name, data.creator, data.year, data.poster, data.watched, data.score, data.emmies));
+        new SeriesList(".series-pending > div", this.seriesPending(), this.onDeleteSeries.bind(this), this.setScoreSeries.bind(this));
+        new SeriesList(".series-watched > div", this.seriesWatched(), this.onDeleteSeries.bind(this), this.setScoreSeries.bind(this));
     }
     seriesPending() {
-        return this.seriesList.filter((film) => !film.watched);
+        return this.seriesArray.filter((film) => !film.watched);
     }
     seriesWatched() {
-        return this.seriesList.filter((film) => film.watched);
+        return this.seriesArray.filter((film) => film.watched);
     }
     createTemplate() {
         return `
@@ -42,5 +38,21 @@ export class Home extends Component {
           <div></div>
         </section>
       </section>`;
+    }
+    onDeleteSeries(id) {
+        this.seriesArray = this.seriesArray.filter((series) => series.id !== id);
+        this.render();
+    }
+    setScoreSeries(id, score) {
+        this.seriesArray = this.seriesArray.map((series) => {
+            console.log(series);
+            const current = Object.assign({}, series);
+            if (series.id === id) {
+                current.watched = true;
+                current.score = score;
+            }
+            return current;
+        });
+        this.render();
     }
 }

@@ -1,10 +1,15 @@
 import { iComponent } from "../interfaces/iComponent.js";
-import { Series } from "../models/Series.js";
 import { SeriesCard } from "./SeriesCard.js";
 import { Component } from "./Component.js";
+import { iSeries } from "../interfaces/iSeries.js";
 
 export class SeriesList extends Component implements iComponent {
-  constructor(public selector: string, public seriesArray: Array<Series>) {
+  constructor(
+    public selector: string,
+    public seriesArray: Array<iSeries>,
+    public onDeleteSeries: (id: number) => void,
+    public setScoreSeries: (id: number, score: number) => void
+  ) {
     super(selector, () => this.createTemplate());
     this.render();
   }
@@ -13,7 +18,12 @@ export class SeriesList extends Component implements iComponent {
     super.render();
     this.seriesArray.forEach(
       (film) =>
-        new SeriesCard(this.selector + ` .serie[data-id="${film.id}"]`, film)
+        new SeriesCard(
+          this.selector + ` .serie[data-id="${film.id}"]`,
+          film,
+          this.onDeleteSeries.bind(this),
+          this.setScoreSeries.bind(this)
+        )
     );
   }
 

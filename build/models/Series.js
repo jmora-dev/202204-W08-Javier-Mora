@@ -9,8 +9,4 @@ export class Series {
         this.score = score;
         this.emmies = emmies;
     }
-    setScore(score) {
-        this.watched = true;
-        this.score = score;
-    }
 }
