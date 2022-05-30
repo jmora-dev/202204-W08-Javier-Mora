@@ -39,7 +39,7 @@ export const series = [
     year: 2001,
     poster: "https://www.cine.com/media/series/2711.jpg",
     watched: true,
-    score: 5,
+    score: 3,
     emmies: 53,
   },
   {
@@ -47,7 +47,7 @@ export const series = [
     name: "Atypical",
     creator: "Robia Rashid",
     year: 2017,
-    poster: "https://www.cine.com/media/series/2711.jpg",
+    poster: "https://m.media-amazon.com/images/I/418FprR0sGL._SY346_.jpg",
     watched: false,
     score: 0,
     emmies: 0,

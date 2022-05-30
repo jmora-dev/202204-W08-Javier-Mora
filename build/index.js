@@ -1,5 +1,2 @@
-"use strict";
-function sayHi() {
-    console.log("Hola mundos!!!");
-}
-sayHi();
+import { App } from "./components/App.js";
+const app = new App();
