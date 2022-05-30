@@ -1,10 +1,10 @@
 import { iComponent } from "../interfaces/iComponent";
-import { Film } from "../models/Film.js";
+import { Series } from "../models/Series.js";
 import { Component } from "./Component.js";
 import { StarRating } from "./StarRating.js";
 
-export class CardFilm extends Component implements iComponent {
-  constructor(public selector: string, public film: Film) {
+export class SeriesCard extends Component implements iComponent {
+  constructor(public selector: string, public film: Series) {
     super(selector, () => this.createTemplate());
     this.render();
   }
