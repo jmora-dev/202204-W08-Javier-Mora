@@ -1,6 +1,6 @@
 import { series } from "../data/seriesData.js";
 import { Component } from "./Component.js";
-import { SeriesList } from "./SeriesList.js";
+import { LIST_TYPE, SeriesList } from "./SeriesList.js";
 export class Home extends Component {
     constructor(selector) {
         super(selector, () => this.createTemplate());
@@ -10,8 +10,8 @@ export class Home extends Component {
     }
     render() {
         super.render();
-        new SeriesList(".series-pending > div", this.seriesPending(), this.onDeleteSeries.bind(this), this.setScoreSeries.bind(this));
-        new SeriesList(".series-watched > div", this.seriesWatched(), this.onDeleteSeries.bind(this), this.setScoreSeries.bind(this));
+        new SeriesList(".series-pending > div", LIST_TYPE.PENDING, this.seriesPending(), this.onDeleteSeries.bind(this), this.setScoreSeries.bind(this));
+        new SeriesList(".series-watched > div", LIST_TYPE.WATCHED, this.seriesWatched(), this.onDeleteSeries.bind(this), this.setScoreSeries.bind(this));
     }
     seriesPending() {
         return this.seriesArray.filter((film) => !film.watched);
