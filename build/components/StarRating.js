@@ -16,23 +16,14 @@ export class StarRating extends Component {
         });
     }
     createTemplate() {
-        return `
-      <ul class="score">
-        <li class="score__star" role="button">
-          <i class="icon--score ${this.score < 1 ? "far" : "fas"} fa-star" title="1/5"></i>
-        </li>
-        <li class="score__star" role="button">
-          <i class="icon--score ${this.score < 2 ? "far" : "fas"} fa-star" title="2/5"></i>
-        </li>
-        <li class="score__star" role="button">
-          <i class="icon--score ${this.score < 3 ? "far" : "fas"} fa-star" title="3/5"></i>
-        </li>
-        <li class="score__star" role="button">
-          <i class="icon--score ${this.score < 4 ? "far" : "fas"} fa-star" title="4/5"></i>
-        </li>
-        <li class="score__star" role="button">
-          <i class="icon--score ${this.score < 5 ? "far" : "fas"} fa-star" title="5/5"></i>
-        </li>
-      </ul>`;
+        let html = '<ul class="score">';
+        for (let i = 0; i < 5; i++) {
+            html += `
+       <li class="score__star" role="button">
+          <i class="icon--score ${this.score < i + 1 ? "far" : "fas"} fa-star" title="${i + 1}/5"></i>
+        </li>`;
+        }
+        html += "</ul>";
+        return html;
     }
 }
